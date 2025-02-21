@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import QuoteBox from "./components/QueteBox";
 import TaskForm from "./components/TaskForm";
 import TaskItem from "./components/TaskItem";
 import { Task } from "./interfaces";
@@ -49,6 +50,7 @@ const App: React.FC = () => {
           />
         </div>
         <h1 className="text-4xl font-bold text-center text-gray-800">Task Manager</h1>
+        <QuoteBox />
         <TaskForm onAddTask={addTask} />
         <div className="flex justify-center gap-4">
           {["all", "completed", "incomplete"].map((type) => (
