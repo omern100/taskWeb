@@ -5,3 +5,8 @@ export interface Task {
     completed: boolean;
   }
   
+  export interface Quote {
+    quote: string; 
+    author: string;
+    category?: string;
+  }
