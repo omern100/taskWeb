@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { Quote } from "../interfaces";
 
 const QuoteBox: React.FC = () => {
+  const [quote, setQuote] = useState<Quote | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const controller = new AbortController(); 
@@ -14,9 +17,15 @@ const QuoteBox: React.FC = () => {
           },
           signal: controller.signal,
         });
-
+        const newQuote: Quote = {
+          quote: response.data[0].quote,
+          author: response.data[0].author,
+          category: response.data[0].category,
+        };
+        setQuote(newQuote);
       } catch (err) {
         if (axios.isCancel(err)) return;
+        setError("Failed to fetch quote");
       }
     };
     fetchQuote();
@@ -30,6 +39,7 @@ const QuoteBox: React.FC = () => {
     <div className="relative bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 text-white p-8 rounded-2xl shadow-xl mb-10 transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
       {quote?.category && (
         <span className="absolute top-2 right-2 bg-white/20 text-xs font-semibold uppercase px-2 py-1 rounded-full opacity-80">
+          {quote.category}
         </span>
       )}
       {error ? (
